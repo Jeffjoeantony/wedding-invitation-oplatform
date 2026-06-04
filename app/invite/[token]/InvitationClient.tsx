@@ -375,11 +375,11 @@ export default function InvitationClient({ guest, event }: any) {
                 <p className="text-[9px] uppercase tracking-widest text-rose-300/50 mb-3">Counting down to forever</p>
                 <div className="flex items-start justify-center gap-2 md:gap-3">
                   <CountCell value={countdown.days}    label="Days"    />
-                  <span className="text-rose-400 text-xl font-light mt-2.5">:</span>
+                  <div className="h-14 md:h-16 flex items-center justify-center"><span className="text-rose-400 text-xl font-light pb-1">:</span></div>
                   <CountCell value={countdown.hours}   label="Hours"   />
-                  <span className="text-rose-400 text-xl font-light mt-2.5">:</span>
+                  <div className="h-14 md:h-16 flex items-center justify-center"><span className="text-rose-400 text-xl font-light pb-1">:</span></div>
                   <CountCell value={countdown.minutes} label="Min"     />
-                  <span className="text-rose-400 text-xl font-light mt-2.5">:</span>
+                  <div className="h-14 md:h-16 flex items-center justify-center"><span className="text-rose-400 text-xl font-light pb-1">:</span></div>
                   <CountCell value={countdown.seconds} label="Sec"     />
                 </div>
               </div>

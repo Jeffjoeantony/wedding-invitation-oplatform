@@ -464,15 +464,15 @@ export default function AdminPage() {
 
       {/* ── Sticky header ── */}
       <div className="bg-white/80 backdrop-blur-md border-b border-rose-100/80 sticky top-0 z-20 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-3.5">
+        <div className="max-w-7xl mx-auto px-4 py-2.5 md:px-6 md:py-3.5">
           <div className="flex items-center justify-between gap-4">
             {/* Brand */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-600 to-rose-800 flex items-center justify-center text-white text-lg shadow-md">
+            <div className="flex items-center gap-2.5 md:gap-3">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-br from-rose-600 to-rose-800 flex items-center justify-center text-white text-base md:text-lg shadow-md shrink-0">
                 💍
               </div>
               <div>
-                <h1 className="text-base font-semibold text-gray-900 leading-tight tracking-tight">
+                <h1 className="text-sm md:text-base font-semibold text-gray-900 leading-tight tracking-tight">
                   Digital Wedding Invitation
                 </h1>
                 <p className="text-[11px] text-gray-400 leading-tight">
@@ -523,16 +523,16 @@ export default function AdminPage() {
         <Tabs defaultValue="overview" className="w-full">
 
           {/* Tab bar */}
-          <TabsList className="grid w-full grid-cols-5 bg-white/90 shadow-sm border border-rose-100 rounded-2xl p-1 mb-6">
+          <TabsList className="flex w-full overflow-x-auto justify-start sm:justify-center bg-white/90 shadow-sm border border-rose-100 rounded-2xl p-1 mb-6">
             <TabsTrigger
               value="overview"
-              className="rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+              className="flex-shrink-0 px-4 rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger
               value="guests"
-              className="rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+              className="flex-shrink-0 px-4 rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
             >
               Guest List
               {stats.total > 0 && (
@@ -543,19 +543,19 @@ export default function AdminPage() {
             </TabsTrigger>
             <TabsTrigger
               value="add-guest"
-              className="rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+              className="flex-shrink-0 px-4 rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
             >
               Add Guest
             </TabsTrigger>
             <TabsTrigger
               value="import-export"
-              className="rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+              className="flex-shrink-0 px-4 rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
             >
               Import / Export
             </TabsTrigger>
             <TabsTrigger
               value="event"
-              className="rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+              className="flex-shrink-0 px-4 rounded-xl text-sm data-[state=active]:bg-rose-700 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
             >
               Event Details
             </TabsTrigger>

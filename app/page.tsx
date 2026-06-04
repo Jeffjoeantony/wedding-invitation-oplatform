@@ -354,13 +354,13 @@ export default function HomePage() {
           {!loading && event?.date && !countdown.past && (
             <div className="animate-fade-in-up opacity-0-init delay-800 mb-10">
               <p className="text-rose-300/60 text-[10px] uppercase tracking-widest mb-4">Counting down to forever</p>
-              <div className="flex items-start justify-center gap-3 md:gap-5">
+              <div className="flex items-start justify-center gap-2 md:gap-5">
                 <CountCell value={countdown.days}    label="Days"    />
-                <span className="text-rose-400 text-2xl font-light mt-3">:</span>
+                <div className="h-16 md:h-20 flex items-center justify-center"><span className="text-rose-400 text-2xl font-light pb-2">:</span></div>
                 <CountCell value={countdown.hours}   label="Hours"   />
-                <span className="text-rose-400 text-2xl font-light mt-3">:</span>
+                <div className="h-16 md:h-20 flex items-center justify-center"><span className="text-rose-400 text-2xl font-light pb-2">:</span></div>
                 <CountCell value={countdown.minutes} label="Minutes" />
-                <span className="text-rose-400 text-2xl font-light mt-3">:</span>
+                <div className="h-16 md:h-20 flex items-center justify-center"><span className="text-rose-400 text-2xl font-light pb-2">:</span></div>
                 <CountCell value={countdown.seconds} label="Seconds" />
               </div>
             </div>
