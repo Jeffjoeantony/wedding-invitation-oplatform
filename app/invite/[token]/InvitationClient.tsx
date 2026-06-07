@@ -378,7 +378,7 @@ export default function InvitationClient({ guest, event }: any) {
             </div>
 
             {/* Countdown */}
-            {!countdown.past && (
+            {event?.date && (
               <div className="mb-6 text-center">
                 <p className="text-[9px] uppercase tracking-widest text-rose-300/50 mb-3">{copy.countdownLabel}</p>
                 <div className="flex items-start justify-center gap-2 md:gap-3">

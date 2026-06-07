@@ -362,7 +362,7 @@ export default function HomePage() {
           )}
 
           {/* Live countdown */}
-          {!loading && event?.date && !countdown.past && (
+          {!loading && event?.date && (
             <div className="animate-fade-in-up opacity-0-init delay-800 mb-10">
               <p className="text-rose-300/60 text-[10px] uppercase tracking-widest mb-4">{copy.countdownLabel}</p>
               <div className="flex items-start justify-center gap-2 md:gap-5">
