@@ -120,6 +120,7 @@ export default function AdminPage() {
   const [importPreviewCols, setImportPreviewCols] = useState<string[]>([])
   const [importing, setImporting] = useState(false)
   const [importResult, setImportResult] = useState('')
+  const [addGuestError, setAddGuestError] = useState('')
 
   const fetchData = useCallback(async () => {
     setRefreshing(true)
@@ -151,6 +152,7 @@ export default function AdminPage() {
 
   const addGuest = async (e: React.FormEvent) => {
     e.preventDefault()
+    setAddGuestError('')
     setAdding(true)
     const res = await fetch('/api/guests', {
       method: 'POST',
@@ -162,12 +164,14 @@ export default function AdminPage() {
       }),
     })
     if (!res.ok) {
-      alert('Error adding guest')
+      const err = await res.json().catch(() => ({}))
+      setAddGuestError(err.error || 'Failed to add guest. Please try again.')
     } else {
       const data = await res.json()
       setGuests([data, ...guests])
       setNewGuestName('')
       setNewGuestPhone('')
+      setAddGuestError('')
     }
     setAdding(false)
   }
@@ -243,7 +247,11 @@ export default function AdminPage() {
         })
         if (res.ok) {
           const result = await res.json()
-          setImportResult(`✓ Successfully imported ${result.count} guests`)
+          setImportResult(
+            result.skipped > 0
+              ? `✓ ${result.message}`
+              : `✓ Successfully imported ${result.count} guests`
+          )
           setImportFile(null)
           setImportPreview([])
           setImportPreviewCols([])
@@ -926,6 +934,13 @@ export default function AdminPage() {
                         </SelectContent>
                       </Select>
                     </div>
+                    {/* Duplicate / error message */}
+                    {addGuestError && (
+                      <div className="flex items-start gap-2 rounded-xl px-4 py-3 text-sm text-red-700 bg-red-50 border border-red-200">
+                        <span className="shrink-0 mt-0.5">⚠</span>
+                        <span>{addGuestError}</span>
+                      </div>
+                    )}
                     <Button
                       type="submit"
                       disabled={!newGuestName || adding}
