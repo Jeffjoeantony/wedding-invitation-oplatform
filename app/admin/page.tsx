@@ -35,6 +35,7 @@ interface Event {
   location: string
   contact: string
   maps_url?: string
+  event_template?: 'Wedding' | 'Engagement'
 }
 
 // ── Avatar component ──────────────────────────────────────────────────────────
@@ -1154,11 +1155,36 @@ export default function AdminPage() {
                     <span className="text-2xl">🎊</span>
                     <div>
                       <CardTitle>Event Details</CardTitle>
-                      <CardDescription>Update your wedding information</CardDescription>
+                      <CardDescription>
+                        {event.event_template === 'Engagement'
+                          ? 'Update your engagement ceremony information'
+                          : 'Update your wedding information'}
+                      </CardDescription>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-5">
+
+                  {/* ── Event Type selector ───────────────────────────────── */}
+                  <div>
+                    <Label htmlFor="event-type">Event Type</Label>
+                    <Select
+                      value={event.event_template ?? 'Wedding'}
+                      onValueChange={(val) => updateEvent({ event_template: val })}
+                    >
+                      <SelectTrigger id="event-type" className="mt-2 rounded-xl">
+                        <SelectValue placeholder="Select event type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {/* ── Add new event types here ── */}
+                        <SelectItem value="Wedding">💍 Wedding</SelectItem>
+                        <SelectItem value="Engagement">💑 Engagement</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-gray-400 mt-1.5">
+                      Changes all wording on the invitation cards automatically.
+                    </p>
+                  </div>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <Label>Partner 1</Label>
