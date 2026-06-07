@@ -26,13 +26,6 @@ const nextConfig = {
           },
         ],
       },
-      // Cache static assets aggressively
-      {
-        source: '/_next/static/(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
     ]
   },
 
@@ -54,6 +47,42 @@ const nextConfig = {
 
   // ── Compression / performance ─────────────────────────────────────────────────
   compress: true,
+
+  // ── Fix process polyfill issue with Radix UI / Turbopack ─────────────────────
+  // Radix UI (used by shadcn/ui) checks process.env.NODE_ENV internally.
+  // optimizePackageImports tells Turbopack to properly tree-shake these packages,
+  // resolving the "module factory not available" error for the process polyfill.
+  experimental: {
+    optimizePackageImports: [
+      '@radix-ui/react-accordion',
+      '@radix-ui/react-alert-dialog',
+      '@radix-ui/react-avatar',
+      '@radix-ui/react-checkbox',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-label',
+      '@radix-ui/react-popover',
+      '@radix-ui/react-select',
+      '@radix-ui/react-separator',
+      '@radix-ui/react-slot',
+      '@radix-ui/react-switch',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-toast',
+      '@radix-ui/react-tooltip',
+      'lucide-react',
+    ],
+  },
+
+  // ── Webpack fallback for browser bundles (production builds via webpack) ──────
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        process: false,
+      }
+    }
+    return config
+  },
 
   // ── Power off source maps in production (smaller bundle, no leaked code) ──────
   productionBrowserSourceMaps: false,

@@ -165,15 +165,11 @@ function Ornament({ text = '♥ ♥ ♥' }: { text?: string }) {
 
 // ── Attending step types ──────────────────────────────────────────────────────
 type Step = 'view' | 'rsvp-yes' | 'confirmed'
-interface AttendingMember { name: string; type: 'Adult' | 'Child' }
 
 // ── Main component ────────────────────────────────────────────────────────────
 export default function InvitationClient({ guest, event }: any) {
   const [step, setStep] = useState<Step>('view')
-  const [paxCount, setPaxCount] = useState(1)
-  const [attendingMembers, setAttendingMembers] = useState<AttendingMember[]>([
-    { name: guest.name, type: 'Adult' },
-  ])
+  const [paxCount, setPaxCount] = useState(0)
   const [submitting, setSubmitting] = useState(false)
   const [rsvpResponse, setRsvpResponse] = useState<'yes' | 'no' | null>(null)
   const [visible, setVisible] = useState(false)
@@ -185,7 +181,7 @@ export default function InvitationClient({ guest, event }: any) {
 
   const countdown = useCountdown(event.date)
 
-  const submitRsvp = async (status: string, count: number, members: AttendingMember[]) => {
+  const submitRsvp = async (status: string, count: number) => {
     setSubmitting(true)
     try {
       const res = await fetch('/api/rsvp', {
@@ -195,7 +191,6 @@ export default function InvitationClient({ guest, event }: any) {
           token: guest.unique_token,
           status,
           pax_count: count,
-          attending_members: members,
         }),
       })
       if (!res.ok) {
@@ -215,7 +210,7 @@ export default function InvitationClient({ guest, event }: any) {
     if (response === 'yes') {
       setStep('rsvp-yes')
     } else {
-      submitRsvp('no', 0, [])
+      submitRsvp('no', 0)
     }
   }
 
@@ -440,9 +435,10 @@ export default function InvitationClient({ guest, event }: any) {
             {/* Counter */}
             <div className="flex items-center justify-center gap-6 mb-8">
               <button
-                onClick={() => setPaxCount(Math.max(1, paxCount - 1))}
-                className="w-12 h-12 rounded-full text-white text-2xl font-light transition-all duration-200 hover:scale-110 flex items-center justify-center"
+                onClick={() => setPaxCount(Math.max(0, paxCount - 1))}
+                className="w-12 h-12 rounded-full text-white text-2xl font-light transition-all duration-200 hover:scale-110 flex items-center justify-center disabled:opacity-30"
                 style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
+                disabled={paxCount === 0}
               >
                 −
               </button>
@@ -466,34 +462,12 @@ export default function InvitationClient({ guest, event }: any) {
               </button>
             </div>
 
-            {/* Extra guest names */}
-            {paxCount > 1 && (
-              <div className="mb-6 space-y-2">
-                <p className="text-white/40 text-xs uppercase tracking-widest mb-3 text-center">Additional guest names (optional)</p>
-                {Array.from({ length: paxCount - 1 }).map((_, i) => (
-                  <input
-                    key={i}
-                    placeholder={`Guest ${i + 2}`}
-                    className="w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none transition-all"
-                    style={{
-                      background: 'rgba(255,255,255,0.07)',
-                      border: '1px solid rgba(255,255,255,0.12)',
-                    }}
-                    onChange={(e) => {
-                      const m = [...attendingMembers]
-                      if (!m[i + 1]) m[i + 1] = { name: '', type: 'Adult' }
-                      m[i + 1].name = e.target.value
-                      setAttendingMembers(m)
-                    }}
-                  />
-                ))}
-              </div>
-            )}
+
 
             <div className="space-y-3">
               <button
-                onClick={() => submitRsvp('yes', paxCount, attendingMembers)}
-                disabled={submitting}
+                onClick={() => submitRsvp('yes', paxCount)}
+                disabled={submitting || paxCount === 0}
                 className="w-full py-3.5 rounded-2xl text-white font-medium text-sm tracking-wide transition-all duration-300 hover:scale-[1.02] disabled:opacity-60"
                 style={{
                   background: 'linear-gradient(135deg, #be123c, #9f1239)',
