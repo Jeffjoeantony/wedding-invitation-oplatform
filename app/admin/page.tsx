@@ -1627,10 +1627,7 @@ export default function AdminHubPage() {
             {/* ── Dashboard ── */}
             {activeNav === 'dashboard' && (
               <>
-                <div className="page-header">
-                  <h1>Overview</h1>
-                  <p>Your digital invitation platform at a glance.</p>
-                </div>
+
                 {loading ? (
                   <div style={{ display: 'flex', gap: 16, marginBottom: 28, flexWrap: 'wrap' }}>
                     {[1,2,3,4].map(i => (
